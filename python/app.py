@@ -1,10 +1,10 @@
 from time import sleep
-from gpiozero import LED
+from gpiozero import PWMLED
 from twython import TwythonStreamer
 
 hashtags = {
-    '#yes': LED(18),
-    '#no': LED(15),
+    '#yes': PWMLED(18),
+    '#no': PWMLED(15),
 }
 
 # Twitter application authentication
@@ -18,12 +18,15 @@ class BlinkyStreamer(TwythonStreamer):
     def on_success(self, data):
         if 'text' in data:
             print(data['text'].encode('utf-8'))
-            self.led.on()
-            sleep(0.5)
-            self.led.off()
+            if self.count < 1:
+                self.count += 0.01
+            self.led.value = self.count
+            
 
 # Create streamer
 for hashtag, led in hashtags.items():
     stream = BlinkyStreamer(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
     stream.statuses.filter(track=hashtag)
     stream.led = led
+    stream.led.off()
+    stream.count = 0
