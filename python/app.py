@@ -1,6 +1,7 @@
 from time import sleep
 from gpiozero import PWMLED
 from twython import TwythonStreamer
+from signal import pause
 
 hashtags = {
     '#yes': PWMLED(18),
@@ -30,3 +31,5 @@ for hashtag, led in hashtags.items():
     stream.led = led
     stream.led.off()
     stream.count = 0
+
+pause()
