@@ -28,7 +28,7 @@ class BlinkyStreamer(TwythonStreamer):
                     if hashtags[hashtag]['count'] < 100:
                         hashtags[hashtag]['count'] += 1
                     hashtags[hashtag]['led'].value = hashtags[hashtag]['count'] / 100
-                    print(hashtags[hashtag], hashtags[hashtag]['count'])
+                    print(hashtag, hashtags[hashtag]['count'])
                 
 
 # Create streamer
